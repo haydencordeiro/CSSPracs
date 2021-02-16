@@ -8,19 +8,54 @@ from numpy.lib.polynomial import RankWarning
 csKey = 0
 
 
-def caesarCypherEncrypt(text, shift):
-    temp = ""
+def caesarCypherEncrypt(text, s):
+    result = ""
+    ts = s
     for i in text:
-        temp += (chr((ord(i)+shift % 26)))
-    print("Substituted text ", temp)
-    return temp
+        # print(s)
+        if i == " ":
+            result += " "
+            continue
+        if ord(i)+s > 122:
+            temp = ord(i)
+            ts = s
+            while ts != -1:
+                if temp > 122:
+                    temp = 97
+                    ts -= 1
+                    continue
+                temp += 1
+                ts -= 1
+            result += chr(temp)
+        else:
+            result += chr(ord(i)+s)
+    print("substituted text", result)
+    return result
 
 
-def ceaserCypherDecrypt(text, shift):
-    temp = ""
+def ceaserCypherDecrypt(text, s):
+    result = ""
+    ts = s
     for i in text:
-        temp += (chr((ord(i)-shift % 26)))
-    return temp
+        # print(s)
+        if i == " ":
+            result += " "
+            continue
+        if ord(i)-s < 97:
+            temp = ord(i)
+            ts = s
+            while ts != -1:
+                if temp < 97:
+                    temp = 122
+                    ts -= 1
+                    continue
+                temp -= 1
+                ts -= 1
+            result += chr(temp)
+        else:
+            result += chr(ord(i)-s)
+        # print(result)
+    return result
 
 
 def getAllFactors(n):
